@@ -10,13 +10,7 @@ app.use(express.json())
 app.use(cors())
 app.use(express.static('build'))
 app.use(morgan('tiny'))
-morgan.token('body', (req, res) => {
-    return JSON.stringify(req.body)
-})
-
-app.get('/', (req, res) => {
-    res.send('<h1>NICE</h1>')
-})
+morgan.token('body', req => JSON.stringify(req.body))
 
 app.get('/info', (req, res) => {
     Person.countDocuments({}, (err, count) => {
@@ -80,7 +74,7 @@ app.put('/api/persons/:id', (req, res, next) => {
 
 app.delete('/api/persons/:id', (req, res, next) => {
     Person.findByIdAndRemove(req.params.id)
-        .then(result => {
+        .then(() => {
             res.status(204).end()
         })
         .catch(error => next(error))
@@ -102,7 +96,5 @@ app.use(errorHandler)
 
 const PORT = process.env.PORT
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`)  
+    console.log(`Server running on port ${PORT}`)
 })
-
-
