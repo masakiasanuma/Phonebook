@@ -4,9 +4,9 @@
   "description": "Phonebook backend",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "cross-env NODE-ENV=production node index.js",
+    "dev": "cross-env NODE-ENV=development nodemon index.js",
+    "test": "cross-env NODE-ENV=test jest --verbose --runInBand",
     "build:ui": "rm -rf build && cd ../../part2/phonebook && npm run build --prod && cp -r build ../../part3/phonebookBackend/",
     "lint": "eslint ."
   },
@@ -14,6 +14,7 @@
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
+    "cross-env": "^7.0.2",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "mongoose": "^5.9.7",
@@ -22,6 +23,10 @@
   },
   "devDependencies": {
     "eslint": "^6.8.0",
+    "jest": "^25.4.0",
     "nodemon": "^2.0.2"
+  },
+  "jest": {
+    "testEnvironment": "node"
   }
 }
